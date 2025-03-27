@@ -1,3 +1,7 @@
+provider "aws" {
+  region     = "ap-south-1"
+}
+
 
 data "aws_ami" "al2023-ami-2023" {
   owners           = var.amifilter["owner"]
