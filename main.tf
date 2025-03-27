@@ -10,10 +10,6 @@ data "aws_ami" "al2023-ami-2023" {
   owners      = var.amifilter["owner"]
   most_recent = true
 
-  filter {
-    name   = "name"
-    values = var.amifilter["name"]
-  }
 
   filter {
     name   = "virtualization-type"
