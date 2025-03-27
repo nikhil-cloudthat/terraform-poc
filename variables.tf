@@ -1,5 +1,4 @@
-
-#EC2 Instance Configurations
+# EC2 Instance Configurations
 variable "instanceName" {
   type        = string
   default     = "terraform-instance"
@@ -21,34 +20,33 @@ variable "keypair" {
 variable "ipassociate" {
   type        = bool
   default     = true
-  description = "associate public IP address to Instance"
+  description = "Associate public IP address to Instance"
 }
 
 variable "monitor" {
-    type        = bool
-    default     = false
-    description = "Monitoring of EC2 Instance boolen, either true or false"
+  type        = bool
+  default     = false
+  description = "Monitoring of EC2 Instance (boolean: true/false)"
 }
 
-variable "volumedetails" {              #Instance volume details
-  type                        = map
-  default                     = {
-    "size"                    = 8
-    "type"                    = "gp3"
-    "delete_with_instance"    = true
+variable "volumedetails" { # Instance root volume details
+  type = map
+  default = {
+    "size"                = 8
+    "type"                = "gp3"
+    "delete_with_instance" = true
   }
-  description                 = "Details of Root volume options"
+  description = "Root volume configuration options"
 }
 
-
-variable "amifilter" {                   # Filtering of AMI's for EC2 instance
-  type              = map
-  default           = {
-    "owner"         = ["amazon"]
-    "name"          = ["al2023-ami-2023.5.20240903.0-kernel-6.1-x86_64"]
-    "virtualtype"   = ["hvm"]
-    "arch"          = ["x86_64"]
-    "rootdevice"    = ["ebs"]
+variable "amifilter" { # AMI filtering criteria
+  type = map
+  default = {
+    "owner"        = ["amazon"]
+    "name"         = ["al2023-ami-2023.5.20240903.0-kernel-6.1-x86_64"]
+    "virtualtype"  = ["hvm"]
+    "arch"         = ["x86_64"]
+    "rootdevice"   = ["ebs"]
   }
-  description       = "AMI filtering options"
+  description = "AMI filtering parameters"
 }
