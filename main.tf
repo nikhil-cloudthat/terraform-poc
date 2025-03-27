@@ -1,59 +1,53 @@
 provider "aws" {
-  region = "ap-south-1"  # Replace with your region
+  region = "ap-south-1"
 }
 
-variable "vpc_id" {
-  description = "ID of the existing VPC"
-  type        = string
-  default     = "vpc-0822634396310e8ea"  # Replace with your VPC ID
+data "aws_security_group" "sg" {
+  id = "sg-0021830d470bccf74"
 }
 
-variable "allowed_ssh_cidr" {
-  description = "IP range allowed for SSH access"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]  # Restrict this to specific IPs in production
+data "aws_ami" "al2023-ami-2023" {
+  owners      = var.amifilter["owner"]
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = var.amifilter["name"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = var.amifilter["virtualtype"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = var.amifilter["arch"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = var.amifilter["rootdevice"]
+  }
 }
 
-resource "aws_security_group" "example_sg" {
-  name        = "example-sg"
-  description = "Security group for example services"
-  vpc_id      = var.vpc_id
+resource "aws_instance" "web" {
+  ami                         = data.aws_ami.al2023-ami-2023.id
+  instance_type               = var.instancetype
+  subnet_id                   = "subnet-00064131485745db1"
+  associate_public_ip_address = var.ipassociate
+  monitoring                  = var.monitor
+  key_name                    = var.keypair
 
-  # Ingress rules (SSH, HTTP, HTTPS)
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = var.allowed_ssh_cidr
-  }
+  security_groups = [data.aws_security_group.sg.id]
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Egress rule (allow all outbound traffic)
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+  root_block_device {
+    delete_on_termination = var.volumedetails["delete_with_instance"]
+    volume_type           = var.volumedetails["type"]
+    volume_size           = var.volumedetails["size"]
   }
 
   tags = {
-    Name = "example-sg"
+    Name = var.instanceName
   }
-}
-
-output "security_group_id" {
-  value = aws_security_group.example_sg.id
 }
