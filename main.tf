@@ -30,7 +30,7 @@ data "aws_ami" "al2023-ami-2023" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.al2023-ami-2023.id
   instance_type = var.instancetype
-  subnet_id     = aws_subnet.pub-1.id
+  subnet_id     = "subnet-0ed425f53f5718034"
   associate_public_ip_address = var.ipassociate
   monitoring    = var.monitor
   key_name = var.keypair
