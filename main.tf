@@ -2,6 +2,9 @@ provider "aws" {
   region     = "ap-south-1"
 }
 
+data "aws_security_group" "sg" {
+  id = "sg-0021830d470bccf74"
+}
 
 data "aws_ami" "al2023-ami-2023" {
   owners           = var.amifilter["owner"]
@@ -40,8 +43,8 @@ resource "aws_instance" "web" {
   key_name = var.keypair
 
   security_groups = [
-        "sg-0021830d470bccf74"
-    ]
+    data.aws_security_group.sg.id
+  ]
   
   root_block_device {
     #device_name = "/dev/xvda"          #(for ebs_block_device)
