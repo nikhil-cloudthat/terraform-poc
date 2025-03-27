@@ -5,7 +5,7 @@ provider "aws" {
 variable "vpc_id" {
   description = "ID of the existing VPC"
   type        = string
-  default     = "vpc-05a2ee1bd60533eed"  # Replace with your VPC ID
+  default     = "vpc-0822634396310e8ea"  # Replace with your VPC ID
 }
 
 variable "allowed_ssh_cidr" {
