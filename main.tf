@@ -34,13 +34,13 @@ data "aws_ami" "al2023-ami-2023" {
 resource "aws_instance" "web" {
   ami           = data.aws_ami.al2023-ami-2023.id
   instance_type = var.instancetype
-  subnet_id     = "subnet-0ed425f53f5718034"
+  subnet_id     = "subnet-00064131485745db1"
   associate_public_ip_address = var.ipassociate
   monitoring    = var.monitor
   key_name = var.keypair
 
   security_groups = [
-        "${aws_security_group.sg.id}"
+        "sg-0021830d470bccf74"
     ]
   
   root_block_device {
