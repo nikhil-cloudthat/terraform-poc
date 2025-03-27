@@ -14,7 +14,7 @@ variable "instancetype" {
 
 variable "keypair" {
   type        = string
-  default     = "nikhil"
+  default     = "jenkinskey"
   description = "Keypair Name"
 }
 
