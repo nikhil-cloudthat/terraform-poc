@@ -31,24 +31,24 @@ variable "monitor" {
 }
 
 variable "volumedetails" {              #Instance volume details
-  type        = map
-  default     = {
-    "size" = 8
-    "type" = "gp3"
-    "delete_with_instance"   = true
+  type                        = map
+  default                     = {
+    "size"                    = 8
+    "type"                    = "gp3"
+    "delete_with_instance"    = true
   }
-  description = "Details of Root volume options"
+  description                 = "Details of Root volume options"
 }
 
 
 variable "amifilter" {                   # Filtering of AMI's for EC2 instance
-  type        = map
-  default     = {
-    "owner" = ["amazon"]
-    "name" = ["al2023-ami-2023.5.20240903.0-kernel-6.1-x86_64"]
+  type              = map
+  default           = {
+    "owner"         = ["amazon"]
+    "name"          = ["al2023-ami-2023.5.20240903.0-kernel-6.1-x86_64"]
     "virtualtype"   = ["hvm"]
-    "arch" = ["x86_64"]
-    "rootdevice" = ["ebs"]
+    "arch"          = ["x86_64"]
+    "rootdevice"    = ["ebs"]
   }
-  description = "AMI filtering options"
+  description       = "AMI filtering options"
 }
