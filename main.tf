@@ -26,9 +26,9 @@ resource "aws_instance" "web" {
 
 
 resource "aws_security_group" "example_sg" {
-  name        = "example-sg"
+  name        = "terraform-poc-sg"
   description = "Security group for example services"
-  vpc_id      = var.vpc_id
+  vpc_id      = "vpc-0822634396310e8ea"
 
   # Ingress rules
   ingress {
