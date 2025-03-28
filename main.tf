@@ -10,7 +10,7 @@ data "aws_security_group" "sg" {
 resource "aws_instance" "web" {
   ami                         = "ami-076c6dbba59aa92e6"
   instance_type               = var.instancetype
-  subnet_id                   = "subnet-00064131485745db1"
+  subnet_id                   = "subnet-0376b05408a1be5d4"
   associate_public_ip_address = var.ipassociate
   monitoring                  = var.monitor
   key_name                    = var.keypair
