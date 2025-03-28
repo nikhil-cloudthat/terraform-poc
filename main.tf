@@ -2,10 +2,6 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-data "aws_security_group" "sg" {
-  id = "sg-0021830d470bccf74"
-}
-
 
 resource "aws_instance" "web" {
   ami                         = "ami-076c6dbba59aa92e6"
@@ -15,7 +11,7 @@ resource "aws_instance" "web" {
   monitoring                  = var.monitor
   key_name                    = var.keypair
 
-  security_groups = [data.aws_security_group.sg.id]
+  security_groups = [aws_security_group.example_sg.id]
 
   root_block_device {
     delete_on_termination = var.volumedetails["delete_with_instance"]
@@ -25,5 +21,46 @@ resource "aws_instance" "web" {
 
   tags = {
     Name = var.instanceName
+  }
+}
+
+
+resource "aws_security_group" "example_sg" {
+  name        = "example-sg"
+  description = "Security group for example services"
+  vpc_id      = var.vpc_id
+
+  # Ingress rules
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.allowed_ssh_cidr
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Egress rule
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "terraform-poc-sg"
   }
 }
