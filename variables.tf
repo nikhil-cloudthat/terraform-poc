@@ -32,7 +32,7 @@ variable "monitor" {
 variable "volumedetails" { # Instance root volume details
   type = map
   default = {
-    "size"                = 8
+    "size"                = 10
     "type"                = "gp3"
     "delete_with_instance" = true
   }
